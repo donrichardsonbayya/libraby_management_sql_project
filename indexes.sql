@@ -1,6 +1,6 @@
 USE library_db;
 
--- Index for rentals by customer
+-- Index for rentals  by customer
 CREATE INDEX idx_rentals_customer_id ON rentals(customer_id);
 
 -- Index for rentals by book
