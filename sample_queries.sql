@@ -54,3 +54,56 @@ WHERE rn.days_late > 0
 GROUP BY c.customer_id
 HAVING late_returns > 3
 ORDER BY late_returns DESC;
+
+-- 8. Books that have never been rented
+SELECT b.book_id, b.title
+FROM books b
+LEFT JOIN rentals r ON b.book_id = r.book_id
+WHERE r.rental_id IS NULL;
+
+-- 9. Customers who rented 5+ different genres
+SELECT c.full_name, COUNT(DISTINCT b.genre) AS genre_count
+FROM rentals r
+JOIN books b ON r.book_id = b.book_id
+JOIN customers c ON r.customer_id = c.customer_id
+GROUP BY c.customer_id
+HAVING genre_count >= 5
+ORDER BY genre_count DESC;
+
+-- 10. Most common genre rented each month (last 6 months)
+SELECT
+  MONTH(r.rental_date) AS rental_month,
+  b.genre,
+  COUNT(*) AS rental_count
+FROM rentals r
+JOIN books b ON r.book_id = b.book_id
+WHERE r.rental_date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+GROUP BY rental_month, b.genre
+ORDER BY rental_month, rental_count DESC;
+
+-- 11. Average penalty amount per customer
+SELECT c.full_name, ROUND(AVG(rn.days_late * 5), 2) AS avg_penalty
+FROM returns rn
+JOIN rentals rt ON rn.rental_id = rt.rental_id
+JOIN customers c ON rt.customer_id = c.customer_id
+WHERE rn.days_late > 0
+GROUP BY c.customer_id
+ORDER BY avg_penalty DESC;
+
+-- 12. Books returned late more than 10 times
+SELECT b.title, COUNT(*) AS late_return_count
+FROM returns rn
+JOIN rentals rt ON rn.rental_id = rt.rental_id
+JOIN books b ON rt.book_id = b.book_id
+WHERE rn.days_late > 0
+GROUP BY b.book_id
+HAVING late_return_count > 10
+ORDER BY late_return_count DESC;
+
+-- 13. Rental-to-return gap (in days) for each rental
+SELECT
+  rt.rental_id,
+  DATEDIFF(rn.return_date, rt.rental_date) AS rental_duration_days
+FROM rentals rt
+JOIN returns rn ON rt.rental_id = rn.rental_id
+ORDER BY rental_duration_days DESC;
