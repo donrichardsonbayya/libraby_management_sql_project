@@ -107,3 +107,60 @@ SELECT
 FROM rentals rt
 JOIN returns rn ON rt.rental_id = rn.rental_id
 ORDER BY rental_duration_days DESC;
+
+-- 14. CTE: Monthly rental totals using a Common Table Expression
+WITH monthly_rentals AS (
+    SELECT
+        MONTH(rental_date) AS rental_month,
+        COUNT(*) AS total_rentals
+    FROM rentals
+    GROUP BY MONTH(rental_date)
+)
+SELECT * FROM monthly_rentals
+ORDER BY rental_month;
+
+--  15. Window Function: RANK most rented books
+
+SELECT 
+    title, 
+    COUNT(*) AS total_rentals,
+    RANK() OVER (ORDER BY COUNT(*) DESC) AS rental_rank
+FROM rentals r
+JOIN books b ON r.book_id = b.book_id
+GROUP BY b.book_id, b.title;
+
+-- 16. Window Function: ROW_NUMBER for each customer’s rentals
+SELECT
+    customer_id,
+    book_id,
+    rental_date,
+    ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY rental_date) AS rental_sequence
+FROM rentals;
+
+-- 17. CTE + Aggregate: Top genre per customer
+WITH genre_counts AS (
+    SELECT
+        r.customer_id,
+        b.genre,
+        COUNT(*) AS genre_rentals
+    FROM rentals r
+    JOIN books b ON r.book_id = b.book_id
+    GROUP BY r.customer_id, b.genre
+)
+SELECT *
+FROM (
+    SELECT *,
+        ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY genre_rentals DESC) AS genre_rank
+    FROM genre_counts
+) ranked
+WHERE genre_rank = 1;
+
+-- 18.Recursive CTE (Simulation): Counting down days late
+WITH RECURSIVE late_days_counter(n) AS (
+    SELECT 1
+    UNION ALL
+    SELECT n + 1 FROM late_days_counter WHERE n < 10
+)
+SELECT * FROM late_days_counter;
+
+
