@@ -1,6 +1,6 @@
-# 📚 Library Management SQL Project
+# Library Management SQL Project
 
-## 🔍 Overview
+## Overview
 
 This project simulates a relational database system for managing a library’s core operations — tracking books, customers, rentals, returns, penalties, and inventory changes.
 
@@ -8,7 +8,7 @@ It demonstrates SQL expertise across schema design, stored procedures, triggers,
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - SQL (MySQL)
 - GitHub & GitHub Desktop
@@ -16,7 +16,7 @@ It demonstrates SQL expertise across schema design, stored procedures, triggers,
 
 ---
 
-## 📂 Dataset Summary
+## Dataset Summary
 
 | File | Description |
 |------|-------------|
@@ -27,7 +27,7 @@ It demonstrates SQL expertise across schema design, stored procedures, triggers,
 
 ---
 
-## 🧱 Database Design
+## Database Design
 
 - **4 primary tables**: `books`, `customers`, `rentals`, `returns`
 - **2 logging tables** via triggers: `penalty_log`, `book_update_log`
@@ -35,7 +35,7 @@ It demonstrates SQL expertise across schema design, stored procedures, triggers,
 
 ---
 
-## 🔄 Stored Procedures & Functions
+## Stored Procedures & Functions
 
 - `rent_book`: Updates rentals and inventory
 - `return_book`: Logs return, calculates penalty
@@ -43,14 +43,14 @@ It demonstrates SQL expertise across schema design, stored procedures, triggers,
 
 ---
 
-## 🎯 Triggers
+## Triggers
 
 - `trg_after_return`: Logs penalties into `penalty_log`
 - `trg_after_book_update`: Tracks stock changes in `book_update_log`
 
 ---
 
-## ⚙️ Indexes
+## Indexes
 
 Optimized for performance on:
 - Joins (`customer_id`, `book_id`)
@@ -58,7 +58,7 @@ Optimized for performance on:
 
 ---
 
-## 📊 Sample Queries (Analytics)
+## Sample Queries (Analytics)
 
 - Most rented books and genres
 - Customers with frequent late returns
@@ -69,18 +69,18 @@ Optimized for performance on:
 
 ---
 
-## 🔬 Advanced SQL Highlights
+## Advanced SQL Highlights
 
-- ✅ **Common Table Expressions (CTEs)** for modular logic
-- ✅ **Window Functions** for ranking and partitioning
-- ✅ **Recursive CTE** demonstration
-- ✅ **Subqueries and HAVING clauses** for segmentation
-- ✅ **Multi-join filt**
+- **Common Table Expressions (CTEs)** for modular logic
+- **Window Functions** for ranking and partitioning
+- **Recursive CTE** demonstration
+- **Subqueries and HAVING clauses** for segmentation
+- **Multi-join filt**
 
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 library_management_sql_project/
 ├── sample_dataset/
 │ ├── books.csv
@@ -97,7 +97,7 @@ library_management_sql_project/
 
 ---
 
-## 📌 How to Use
+## How to Use
 
 1. Run `library_db_creation.sql` to create schema
 2. Load CSVs into corresponding tables
@@ -106,7 +106,7 @@ library_management_sql_project/
 
 ---
 
-## 👤 Author
+## Author
 
 **Don Richardson Bayya**  
 
